@@ -20,7 +20,7 @@ if (typeof window !== 'undefined' && !firebase.apps.length) {
   firebase.initializeApp(clientCredentials)
   // To enable analytics. https://firebase.google.com/docs/analytics/get-started
   if ('measurementId' in clientCredentials) firebase.analytics()
-  firebase.auth().signInAnonymously().catch(function (error) {
+  firebase.auth().signInAnonymously().catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
     // var errorMessage = error.message;

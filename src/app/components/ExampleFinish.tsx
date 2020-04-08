@@ -24,14 +24,14 @@ const ExampleFinish: React.FunctionComponent<Props> = props => {
           // doc.data() will be undefined in this case
           console.log('No such document!');
         }
-      }).catch(function (error) {
+      }).catch((error) => {
         console.log('Error getting document:', error);
       });
     }
   }, [loadingUser, user])
 
   return (
-    <Table celled>
+    <Table celled={true}>
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>設問</Table.HeaderCell>
@@ -58,7 +58,7 @@ const ExampleFinish: React.FunctionComponent<Props> = props => {
       <Table.Footer>
         <Table.Row>
           <Table.Cell colSpan='5'>
-
+正答数：999/999　正答率：100％
           </Table.Cell>
         </Table.Row>
       </Table.Footer>

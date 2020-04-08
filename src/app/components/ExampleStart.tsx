@@ -23,11 +23,11 @@ const ExampleStart: React.FC<Props> = props => {
     }
     return answer.answer === cid
   }
-  const updateAnswers = (qid: string, cid: string) => {
-    setAnswers(prev => (prev.map(ans => ans.qid === qid ? { ...ans, answer: cid } : ans)))
+  const updateAnswers = e => {
+    setAnswers(prev => (prev.map(ans => ans.qid === e.target.name ? { ...ans, answer: e.target.value } : ans)))
   }
-  const updateFlag = (qid: string) => {
-    setAnswers(prev => (prev.map(ans => ans.qid === qid ? { ...ans, flagged: !ans.flagged } : ans)))
+  const updateFlag = e => {
+    setAnswers(prev => (prev.map(ans => ans.qid === e.target.value ? { ...ans, flagged: !ans.flagged } : ans)))
   }
   const isFlagged = (qid: string) => {
     const answer = answers.find(a => a.qid === qid)
@@ -54,12 +54,12 @@ const ExampleStart: React.FC<Props> = props => {
                   label={choice.text}
                   value={choice.id}
                   checked={isSelected(q.id, choice.id)}
-                  onClick={() => updateAnswers(q.id, choice.id)}
+                  onClick={updateAnswers}
                 />
               </Form.Field>
             ))}
           </Message>
-          <Button icon='flag' content='フラグ' onClick={() => updateFlag(q.id)} />
+          <Button icon='flag' content='フラグ' value={q.id} onClick={updateFlag} />
         </Tab.Pane>
       )
     })

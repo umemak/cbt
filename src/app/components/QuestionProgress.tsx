@@ -9,8 +9,7 @@ type Props = {
 const QuestionProgress: React.FC<Props> = props => (
   <ul>
     {props.progress.answers.map(answer => (
-      <li key={answer.qid}>
-      </li>
+      <li key={answer.qid} />
     ))}
   </ul>
 )
