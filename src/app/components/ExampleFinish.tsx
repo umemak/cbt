@@ -17,7 +17,7 @@ const ExampleFinish: React.FunctionComponent<Props> = props => {
     if (!loadingUser) {
       const uid = user.uid
       const answerRef = firebase.firestore().collection('answers').doc(uid + ':' + props.example.id)
-      answerRef.get().then(function (doc) {
+      answerRef.get().then((doc) => {
         if (doc.exists) {
           setAnswers(doc.get('answers'))
         } else {
@@ -35,9 +35,9 @@ const ExampleFinish: React.FunctionComponent<Props> = props => {
       <Table.Header>
         <Table.Row>
           <Table.HeaderCell>設問</Table.HeaderCell>
+          <Table.HeaderCell>正否</Table.HeaderCell>
           <Table.HeaderCell>回答</Table.HeaderCell>
           <Table.HeaderCell>正解</Table.HeaderCell>
-          <Table.HeaderCell>正否</Table.HeaderCell>
           <Table.HeaderCell>解説</Table.HeaderCell>
         </Table.Row>
       </Table.Header>
@@ -47,14 +47,21 @@ const ExampleFinish: React.FunctionComponent<Props> = props => {
           return (
             <Table.Row key={answer.qid}>
               <Table.Cell>{answer.qid}</Table.Cell>
+              <Table.Cell>{question && question.answer === answer.answer ? (<Icon name='circle outline' color='green' />) : (<Icon name='x' color='red' />)}</Table.Cell>
               <Table.Cell>{answer.answer}</Table.Cell>
               <Table.Cell>{question && question.answer}</Table.Cell>
-              <Table.Cell>{question && question.answer === answer.answer ? (<Icon name='circle outline' color='green' />) : (<Icon name='x' color='red' />)}</Table.Cell>
               <Table.Cell>{question && question.explanation}</Table.Cell>
             </Table.Row>
           )
         })}
       </Table.Body>
+      <Table.Footer>
+        <Table.Row>
+          <Table.Cell colSpan='5'>
+
+          </Table.Cell>
+        </Table.Row>
+      </Table.Footer>
     </Table>
   )
 }
