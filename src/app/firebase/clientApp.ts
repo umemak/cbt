@@ -22,7 +22,7 @@ if (typeof window !== 'undefined' && !firebase.apps.length) {
   if ('measurementId' in clientCredentials) firebase.analytics()
   firebase.auth().signInAnonymously().catch(function (error) {
     // Handle Errors here.
-    var errorCode = error.code;
+    const errorCode = error.code;
     // var errorMessage = error.message;
 
     if (errorCode === 'auth/operation-not-allowed') {

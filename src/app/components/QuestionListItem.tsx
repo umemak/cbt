@@ -9,7 +9,7 @@ type Props = {
 }
 
 const QuestionListItem: React.FC<Props> = props => (
-  <Link href="/examples/[eid]/start" as={`/examples/${props.eid}/start`}>
+  <Link href='/examples/[eid]/start' as={`/examples/${props.eid}/start`}>
     <a>
       {props.data.id}: {props.data.body}
     </a>

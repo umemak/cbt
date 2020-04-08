@@ -22,10 +22,10 @@ const ExampleFinish: React.FunctionComponent<Props> = props => {
           setAnswers(doc.get('answers'))
         } else {
           // doc.data() will be undefined in this case
-          console.log("No such document!");
+          console.log('No such document!');
         }
       }).catch(function (error) {
-        console.log("Error getting document:", error);
+        console.log('Error getting document:', error);
       });
     }
   }, [loadingUser, user])

@@ -17,12 +17,12 @@ const IndexPage: NextPage = () => {
     // You also have your firebase app initialized
     console.log(firebase)
   }, [loadingUser, user])
-  
+
   return (
-    <Layout title="Home | Next.js + TypeScript Example">
+    <Layout title='Home | Next.js + TypeScript Example'>
       <h1>Hello {user && user.uid} to Next.js 👋</h1>
       <p>
-        <Link href="/about">
+        <Link href='/about'>
           <a>About</a>
         </Link>
       </p>

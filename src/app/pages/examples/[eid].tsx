@@ -15,8 +15,8 @@ class InitialPropsDetail extends React.Component<Props> {
   static getInitialProps = async ({ query }: NextPageContext) => {
     try {
       const { eid } = query
-      console.log("eid: " + eid)
-      const hostname = (typeof window !== "undefined") ? 'https://' + window.location.hostname : 'http://localhost:3000'
+      console.log('eid: ' + eid)
+      const hostname = (typeof window !== 'undefined') ? 'https://' + window.location.hostname : 'http://localhost:3000'
       // console.log("host: " + hostname)
       const item = await sampleFetchWrapper(
         `${hostname}/api/examples/${Array.isArray(eid) ? eid[0] : eid}`

@@ -17,11 +17,11 @@ type Props = {
 const ExampleStart: React.FC<Props> = props => {
   const [answers, setAnswers] = React.useState(props.progress.answers)
   const isSelected = (qid: string, cid: string) => {
-    const a = answers.find(a => a.qid === qid)
-    if (!!!a) {
+    const answer = answers.find(a => a.qid === qid)
+    if (!!!answer) {
       return false
     }
-    return a.answer === cid
+    return answer.answer === cid
   }
   const updateAnswers = (qid: string, cid: string) => {
     setAnswers(prev => (prev.map(ans => ans.qid === qid ? { ...ans, answer: cid } : ans)))
@@ -30,11 +30,11 @@ const ExampleStart: React.FC<Props> = props => {
     setAnswers(prev => (prev.map(ans => ans.qid === qid ? { ...ans, flagged: !ans.flagged } : ans)))
   }
   const isFlagged = (qid: string) => {
-    const a = answers.find(a => a.qid === qid)
-    if (!!!a) {
+    const answer = answers.find(a => a.qid === qid)
+    if (!!!answer) {
       return false
     }
-    return a.flagged
+    return answer.flagged
   }
   const panes = props.example.questions.map(q => {
     const flagged = isFlagged(q.id) ? 'flag' : ''
@@ -69,18 +69,18 @@ const ExampleStart: React.FC<Props> = props => {
   const checkFinish = async () => {
     const hasFlagged = answers.find(ans => ans.flagged)
     if (hasFlagged) {
-
+      return false
     }
 
     const uid = firebase.auth().currentUser!.uid
     const answerRef = firebase.firestore().collection('answers').doc(uid + ':' + props.example.id)
 
     await answerRef.set({
-      uid: uid,
+      uid,
       eid: props.example.id,
       createTime: firebase.firestore.FieldValue.serverTimestamp(),
       updateTime: firebase.firestore.FieldValue.serverTimestamp(),
-      answers: answers
+      answers
     })
     console.log('answers stored')
     Router.push('/examples/[eid]/finish', `/examples/${props.example.id}/finish`)

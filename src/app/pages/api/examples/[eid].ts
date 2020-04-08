@@ -4,7 +4,7 @@ import { sampleExampleData } from '../../../utils/sample-data'
 export default (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const { eid } = req.query
-    const selected = sampleExampleData.find(data => data.id == eid)
+    const selected = sampleExampleData.find(data => data.id === eid)
 
     if (!selected) {
       throw new Error('Cannot find example')
