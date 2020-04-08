@@ -1,5 +1,5 @@
 image:
   file: .gitpod.Dockerfile
 tasks:
-  - init: nvm install 10 && npm i -g firebase-tools
+  - before: nvm install 10 && npm i -g firebase-tools
     command: node -v && firebase login --no-localhost
