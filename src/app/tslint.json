@@ -1,9 +1,10 @@
 {
-  "extends": ["tslint:latest", "tslint-react"],
+  "extends": ["tslint:latest", "tslint-react", "tslint-react-hooks"],
   "rules": {
     "quotemark": [true, "single"],
     "no-submodule-imports": false,
     "no-console": false,
-    "jsx-no-multiline-js": false
+    "jsx-no-multiline-js": false,
+    "react-hooks-nesting": "error"
   }
 }
