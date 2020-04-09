@@ -1,5 +1,0 @@
-image:
-  file: .gitpod.Dockerfile
-tasks:
-  - before: nvm install 10 && npm i -g firebase-tools
-    command: node -v && npx next telemetry disable && firebase login --no-localhost
