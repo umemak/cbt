@@ -3,14 +3,14 @@ import ExampleListItem from './ExampleListItem'
 import { Example } from '../interfaces'
 
 type Props = {
-  items: Example[]
+  examples: Example[]
 }
 
-const ExampleList: React.FunctionComponent<Props> = ({ items }) => (
+const ExampleList: React.FunctionComponent<Props> = ({ examples }) => (
   <ul>
-    {items.map(item => (
-      <li key={item.id}>
-        <ExampleListItem data={item} />
+    {examples.map(example => (
+      <li key={example.id}>
+        <ExampleListItem data={example} />
       </li>
     ))}
   </ul>

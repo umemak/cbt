@@ -14,13 +14,15 @@ export const clientCredentials = {
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
 }
-
+let db
+let auth
 // Check that `window` is in scope for the analytics module!
-if (typeof window !== 'undefined' && !firebase.apps.length) {
+if (!firebase.apps.length) {
   firebase.initializeApp(clientCredentials)
   // To enable analytics. https://firebase.google.com/docs/analytics/get-started
   if ('measurementId' in clientCredentials) firebase.analytics()
-  firebase.auth().signInAnonymously().catch((error) => {
+  auth = firebase.auth()
+  auth.signInAnonymously().catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
     // var errorMessage = error.message;
@@ -31,6 +33,7 @@ if (typeof window !== 'undefined' && !firebase.apps.length) {
       console.error(error);
     }
   });
+  db = firebase.firestore();
 }
 
-export default firebase
+module.exports = { auth, firebase, db }

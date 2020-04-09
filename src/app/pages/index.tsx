@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Layout from '../components/Layout'
 import { NextPage } from 'next'
 import { useUser } from '../context/userContext'
-import firebase from '../firebase/clientApp'
+import { auth } from '../firebase/clientApp'
 
 const IndexPage: NextPage = () => {
   // Our custom hook to get context values
@@ -15,7 +15,7 @@ const IndexPage: NextPage = () => {
       console.log(user)
     }
     // You also have your firebase app initialized
-    console.log(firebase)
+    console.log(auth)
   }, [loadingUser, user])
 
   return (

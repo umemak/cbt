@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Example, Answer } from '../interfaces'
 import { useUser } from '../context/userContext'
-import firebase from '../firebase/clientApp'
+import { db } from '../firebase/clientApp'
 import { Table, Icon } from 'semantic-ui-react'
 
 type Props = {
@@ -16,7 +16,7 @@ const ExampleFinish: React.FunctionComponent<Props> = props => {
   React.useEffect(() => {
     if (!loadingUser) {
       const uid = user.uid
-      const answerRef = firebase.firestore().collection('answers').doc(uid + ':' + props.example.id)
+      const answerRef = db.collection('answers').doc(uid + ':' + props.example.id)
       answerRef.get().then((doc) => {
         if (doc.exists) {
           setAnswers(doc.get('answers'))
