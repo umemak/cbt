@@ -20,20 +20,22 @@ let auth
 if (!firebase.apps.length) {
   firebase.initializeApp(clientCredentials)
   // To enable analytics. https://firebase.google.com/docs/analytics/get-started
-  if ('measurementId' in clientCredentials) firebase.analytics()
+  if (typeof window !== 'undefined') firebase.analytics()
   auth = firebase.auth()
   auth.signInAnonymously().catch((error) => {
     // Handle Errors here.
     const errorCode = error.code;
     // var errorMessage = error.message;
 
-    if (errorCode === 'auth/operation-not-allowed') {
-      alert('You must enable Anonymous auth in the Firebase Console.');
-    } else {
-      console.error(error);
-    }
+    // if (errorCode === 'auth/operation-not-allowed') {
+    //   alert('You must enable Anonymous auth in the Firebase Console.');
+    // } else {
+    //   console.error(error);
+    // }
   });
   db = firebase.firestore();
 }
 
-module.exports = { auth, firebase, db }
+export default firebase
+
+module.exports = { auth, db }

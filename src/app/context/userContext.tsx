@@ -1,5 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react'
-import firebase from '../firebase/clientApp'
+import { auth } from '../firebase/clientApp'
 
 export const UserContext = createContext()
 
@@ -9,12 +9,12 @@ export default ({ children }) => {
 
   useEffect(() => {
     // Listen authenticated user
-    const unsubscriber = firebase.auth().onAuthStateChanged(async user => {
+    const unsubscriber = auth.onAuthStateChanged(async currentUser => {
       try {
-        console.log(user)
-        if (user) {
+        console.log(currentUser)
+        if (currentUser) {
           // User is signed in.
-          const { uid, displayName, email, photoURL } = user
+          const { uid, displayName, email, photoURL } = currentUser
           // You could also look for the user doc in your Firestore (if you have one):
           // const userDoc = await firebase.firestore().doc(`users/${uid}`).get()
           setUser({ uid, displayName, email, photoURL })

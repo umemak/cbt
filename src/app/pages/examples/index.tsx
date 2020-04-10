@@ -38,6 +38,7 @@ ExamplesIndex.getInitialProps = async ({ pathname }) => {
   //   `${hostname}/api/examples`
   // )
   const snapshot = db.collection('examples').get()
+  console.log(snapshot.docs())
   const examples = snapshot.docs.map(doc => doc.data())
   return { examples, pathname }
 }
