@@ -1,4 +1,4 @@
-import { NextPage } from 'next';
+import * as React from 'react';
 import Link from 'next/link';
 import firebase from '../../firebase/clientApp';
 
@@ -9,30 +9,60 @@ import { Example } from '../../interfaces';
 type Props = {
   examples: Example[];
   pathname: string;
+  errors?: string;
 };
 
-const ExamplesIndex: NextPage<Props> = ({ examples, pathname }) => (
-  <Layout title="Users List | Next.js + TypeScript Example">
-    <h1>Examples List</h1>
-    <p>
-      Example fetching data from inside <code>getInitialProps()</code>.
-    </p>
-    <p>You are currently on: {pathname}</p>
-    <ExampleList examples={examples} />
-    <p>
-      <Link href="/">
-        <a>Go home</a>
-      </Link>
-    </p>
-  </Layout>
-);
+class ExamplesIndexPage extends React.Component<Props> {
+  static getInitialProps = async () => {
+    try {
+      const db = firebase.firestore();
+      const snapshot = await db.collection('examples').get();
+      const examples = snapshot.docs.map((doc) => doc.data());
 
-ExamplesIndex.getInitialProps = async ({ pathname }) => {
-  const db = firebase.firestore();
-  const snapshot = await db.collection('examples').get();
-  const examples = snapshot.docs.map((doc) => doc.data());
+      return { examples };
+    } catch (err) {
+      return { errors: err.message };
+    }
+  };
 
-  return { examples, pathname };
-};
+  render() {
+    const { examples, errors } = this.props;
 
-export default ExamplesIndex;
+    if (errors) {
+      return (
+        <Layout title="Error | Next.js + TypeScript Example">
+          <p>
+            <span style={{ color: 'red' }}>Error:</span> {errors}
+          </p>
+        </Layout>
+      );
+    }
+
+    if (!examples) {
+      return (
+        <Layout title="Error | Next.js + TypeScript Example">
+          <p>
+            <span style={{ color: 'red' }}>Error:</span> Example not found.
+          </p>
+        </Layout>
+      );
+    }
+
+    return (
+      <Layout title="Users List | Next.js + TypeScript Example">
+        <h1>Examples List</h1>
+        <p>
+          Example fetching data from inside <code>getInitialProps()</code>.
+        </p>
+        <ExampleList examples={examples} />
+        <p>
+          <Link href="/">
+            <a>Go home</a>
+          </Link>
+        </p>
+      </Layout>
+    );
+  }
+}
+
+export default ExamplesIndexPage;

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Table, Icon } from 'semantic-ui-react';
 import { Example, Answer } from '../interfaces';
 import { useUser } from '../context/userContext';
-import { db } from '../firebase/clientApp';
+import firebase from '../firebase/clientApp';
 
 type Props = {
   example: Example;
@@ -19,7 +19,10 @@ const ExampleFinish: React.FunctionComponent<Props> = ({
   React.useEffect(() => {
     if (!loadingUser) {
       const { uid } = user;
-      const answerRef = db.collection('answers').doc(`${uid}:${example.eid}`);
+      const answerRef = firebase
+        .firestore()
+        .collection('answers')
+        .doc(`${uid}:${example.eid}`);
       answerRef
         .get()
         .then((doc) => {

@@ -11,7 +11,7 @@ type Props = {
   errors?: string;
 };
 
-class InitialPropsDetail extends React.Component<Props> {
+class ExamplesStartPage extends React.Component<Props> {
   static getInitialProps = async ({ query }: NextPageContext) => {
     try {
       const { eid } = query;
@@ -21,7 +21,6 @@ class InitialPropsDetail extends React.Component<Props> {
         .where('eid', '==', eid)
         .get();
       const example = exampleSnapshot.docs[0].data();
-      console.dir(example);
 
       return { example };
     } catch (err) {
@@ -71,4 +70,4 @@ class InitialPropsDetail extends React.Component<Props> {
   }
 }
 
-export default InitialPropsDetail;
+export default ExamplesStartPage;

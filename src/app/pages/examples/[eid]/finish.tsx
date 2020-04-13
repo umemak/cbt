@@ -11,7 +11,7 @@ type Props = {
   errors?: string;
 };
 
-class InitialPropsDetail extends React.Component<Props> {
+class ExamplesFinishPage extends React.Component<Props> {
   static getInitialProps = async ({ query }: NextPageContext) => {
     try {
       const { eid } = query;
@@ -52,7 +52,7 @@ class InitialPropsDetail extends React.Component<Props> {
     }
 
     const answers = example.questions.map((q) => ({
-      qid: q.id,
+      qid: q.qid,
       answer: '',
       fixed: false,
       flagged: false,
@@ -69,4 +69,4 @@ class InitialPropsDetail extends React.Component<Props> {
   }
 }
 
-export default InitialPropsDetail;
+export default ExamplesFinishPage;
