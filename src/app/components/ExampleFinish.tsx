@@ -19,7 +19,7 @@ const ExampleFinish: React.FunctionComponent<Props> = ({
   React.useEffect(() => {
     if (!loadingUser) {
       const { uid } = user;
-      const answerRef = db.collection('answers').doc(`${uid}:${example.id}`);
+      const answerRef = db.collection('answers').doc(`${uid}:${example.eid}`);
       answerRef
         .get()
         .then((doc) => {
@@ -50,7 +50,9 @@ const ExampleFinish: React.FunctionComponent<Props> = ({
       <Table.Body>
         {theanswers &&
           theanswers.map((answer) => {
-            const question = example.questions.find((q) => q.id === answer.qid);
+            const question = example.questions.find(
+              (q) => q.qid === answer.qid,
+            );
 
             return (
               <Table.Row key={answer.qid}>

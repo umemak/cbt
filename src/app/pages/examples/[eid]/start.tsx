@@ -4,7 +4,7 @@ import { NextPageContext } from 'next';
 import { Example, Progress } from '../../../interfaces';
 import Layout from '../../../components/Layout';
 import ExampleStart from '../../../components/ExampleStart';
-import { sampleFetchWrapper } from '../../../utils/sample-api';
+import firebase from '../../../firebase/clientApp';
 
 type Props = {
   example?: Example;
@@ -15,16 +15,13 @@ class InitialPropsDetail extends React.Component<Props> {
   static getInitialProps = async ({ query }: NextPageContext) => {
     try {
       const { eid } = query;
-      console.log(`eid: ${eid}`);
-      const hostname =
-        typeof window !== 'undefined'
-          ? `https://${window.location.hostname}`
-          : 'http://localhost:3000';
-      // console.log("host: " + hostname)
-      const example = await sampleFetchWrapper(
-        `${hostname}/api/examples/${Array.isArray(eid) ? eid[0] : eid}`,
-      );
-      // console.log("item: " + JSON.stringify(item))
+      const db = firebase.firestore();
+      const exampleSnapshot = await db
+        .collection('examples')
+        .where('eid', '==', eid)
+        .get();
+      const example = exampleSnapshot.docs[0].data();
+      console.dir(example);
 
       return { example };
     } catch (err) {
@@ -56,7 +53,7 @@ class InitialPropsDetail extends React.Component<Props> {
     }
 
     const answers = example.questions.map((q) => ({
-      qid: q.id,
+      qid: q.qid,
       answer: '',
       fixed: false,
       flagged: false,

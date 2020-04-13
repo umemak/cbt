@@ -5,7 +5,6 @@ import firebase from '../../firebase/clientApp';
 import Layout from '../../components/Layout';
 import ExampleList from '../../components/ExampleList';
 import { Example } from '../../interfaces';
-// import { sampleFetchWrapper } from '../../utils/sample-api'
 
 type Props = {
   examples: Example[];
@@ -29,17 +28,7 @@ const ExamplesIndex: NextPage<Props> = ({ examples, pathname }) => (
 );
 
 ExamplesIndex.getInitialProps = async ({ pathname }) => {
-  // Example for including initial props in a Next.js function component page.
-  // Don't forget to include the respective types for any props passed into
-  // the component.
-  // const hostname = (typeof window !== 'undefined') ? 'https://' + window.location.hostname : 'http://localhost:3000'
-  // console.log("host: " + hostname)
-  // const examples: Example[] = await sampleFetchWrapper(
-  //   `${hostname}/api/examples`
-  // )
-  console.log(`firebase: ${firebase}`);
   const db = firebase.firestore();
-  console.log(`db: ${db}`);
   const snapshot = await db.collection('examples').get();
   const examples = snapshot.docs.map((doc) => doc.data());
 

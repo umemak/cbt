@@ -9,7 +9,7 @@ type Props = {
 const ExampleList: React.FunctionComponent<Props> = ({ examples }) => (
   <ul>
     {examples.map((example) => (
-      <li key={example.id}>
+      <li key={example.eid}>
         <ExampleListItem data={example} />
       </li>
     ))}

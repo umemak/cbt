@@ -5,7 +5,6 @@ import Router from 'next/router';
 
 import firebase from '../firebase/clientApp';
 
-// import ChoiceList from './ChoiceList'
 import { Example, Progress } from '../interfaces';
 import Timer from './Timer';
 
@@ -47,10 +46,10 @@ const ExampleStart: React.FC<Props> = ({ example, progress }) => {
     return answer.flagged;
   };
   const panes = example.questions.map((q) => {
-    const flagged = isFlagged(q.id) ? 'flag' : '';
+    const flagged = isFlagged(q.qid) ? 'flag' : '';
 
     return {
-      menuItem: { key: q.id, icon: flagged, content: q.id },
+      menuItem: { key: q.qid, icon: flagged, content: q.qid },
       render: () => (
         <Tab.Pane>
           <Message>
@@ -58,13 +57,13 @@ const ExampleStart: React.FC<Props> = ({ example, progress }) => {
           </Message>
           <Message>
             {q.choices.map((choice) => (
-              <Form.Field key={`${q.id}:${choice.id}`}>
+              <Form.Field key={`${q.qid}:${choice.cid}`}>
                 <Radio
-                  key={choice.id}
-                  name={q.id}
+                  key={choice.cid}
+                  name={q.qid}
                   label={choice.text}
-                  value={choice.id}
-                  checked={isSelected(q.id, choice.id)}
+                  value={choice.cid}
+                  checked={isSelected(q.qid, choice.cid)}
                   onClick={updateAnswers}
                 />
               </Form.Field>
@@ -73,7 +72,7 @@ const ExampleStart: React.FC<Props> = ({ example, progress }) => {
           <Button
             icon="flag"
             content="フラグ"
-            value={q.id}
+            value={q.qid}
             onClick={updateFlag}
           />
         </Tab.Pane>
@@ -92,17 +91,17 @@ const ExampleStart: React.FC<Props> = ({ example, progress }) => {
     const answerRef = firebase
       .firestore()
       .collection('answers')
-      .doc(`${uid}:${example.id}`);
+      .doc(`${uid}:${example.eid}`);
 
     await answerRef.set({
       uid,
-      eid: example.id,
+      eid: example.eid,
       createTime: firebase.firestore.FieldValue.serverTimestamp(),
       updateTime: firebase.firestore.FieldValue.serverTimestamp(),
       answers,
     });
     console.log('answers stored');
-    Router.push('/examples/[eid]/finish', `/examples/${example.id}/finish`);
+    Router.push('/examples/[eid]/finish', `/examples/${example.eid}/finish`);
 
     return true;
   };

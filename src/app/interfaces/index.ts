@@ -10,13 +10,13 @@ export type User = {
 };
 
 export type Example = {
-  id: string;
+  eid: string;
   name: string;
   questions: Question[];
 };
 
 export type Question = {
-  id: string;
+  qid: string;
   body: string;
   choices: Choice[];
   type: string;
@@ -25,7 +25,7 @@ export type Question = {
 };
 
 export type Choice = {
-  id: string;
+  cid: string;
   text: string;
   correct: boolean;
 };
