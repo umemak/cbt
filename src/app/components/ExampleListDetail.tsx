@@ -1,18 +1,18 @@
-import * as React from 'react'
+import * as React from 'react';
 
-import QuestionList from './QuestionList'
-import { Example } from '../interfaces'
+import QuestionList from './QuestionList';
+import { Example } from '../interfaces';
 
 type Props = {
-  item: Example
-}
+  item: Example;
+};
 
-const ExampleListDetail: React.FC<Props> = props => (
-    <div>
-      <h1>Detail for {props.item.name}</h1>
-      <p>ID: {props.item.id}</p>
-      <QuestionList eid={props.item.id} questions={props.item.questions} />
-    </div>
-  )
+const ExampleListDetail: React.FC<Props> = ({ item }) => (
+  <div>
+    <h1>Detail for {item.name}</h1>
+    <p>ID: {item.id}</p>
+    <QuestionList eid={item.id} questions={item.questions} />
+  </div>
+);
 
-export default ExampleListDetail
+export default ExampleListDetail;

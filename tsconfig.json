@@ -2,7 +2,11 @@
   "compileOnSave": false,
   "compilerOptions": {
     "target": "es5",
-    "lib": ["es6", "dom", "es2016"],
+    "lib": [
+      "es6",
+      "dom",
+      "es2016"
+    ],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -15,17 +19,27 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-
     "noImplicitAny": false,
     "strictNullChecks": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
     "sourceMap": true,
-
-    "baseUrl": "src",
+    "baseUrl": ".",
+    "paths": {
+      "~/*": [
+        "./src/*"
+      ]
+    },
     "incremental": true
   },
-  "exclude": ["node_modules", "dist"],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ]
 }

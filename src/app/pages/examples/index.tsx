@@ -1,19 +1,19 @@
-import { NextPage } from 'next'
-import Link from 'next/link'
-import { db } from '../../firebase/clientApp'
+import { NextPage } from 'next';
+import Link from 'next/link';
+import firebase from '../../firebase/clientApp';
 
-import Layout from '../../components/Layout'
-import ExampleList from '../../components/ExampleList'
-import { Example } from '../../interfaces'
+import Layout from '../../components/Layout';
+import ExampleList from '../../components/ExampleList';
+import { Example } from '../../interfaces';
 // import { sampleFetchWrapper } from '../../utils/sample-api'
 
 type Props = {
-  examples: Example[]
-  pathname: string
-}
+  examples: Example[];
+  pathname: string;
+};
 
 const ExamplesIndex: NextPage<Props> = ({ examples, pathname }) => (
-  <Layout title='Users List | Next.js + TypeScript Example'>
+  <Layout title="Users List | Next.js + TypeScript Example">
     <h1>Examples List</h1>
     <p>
       Example fetching data from inside <code>getInitialProps()</code>.
@@ -21,12 +21,12 @@ const ExamplesIndex: NextPage<Props> = ({ examples, pathname }) => (
     <p>You are currently on: {pathname}</p>
     <ExampleList examples={examples} />
     <p>
-      <Link href='/'>
+      <Link href="/">
         <a>Go home</a>
       </Link>
     </p>
   </Layout>
-)
+);
 
 ExamplesIndex.getInitialProps = async ({ pathname }) => {
   // Example for including initial props in a Next.js function component page.
@@ -37,10 +37,13 @@ ExamplesIndex.getInitialProps = async ({ pathname }) => {
   // const examples: Example[] = await sampleFetchWrapper(
   //   `${hostname}/api/examples`
   // )
-  const snapshot = db.collection('examples').get()
-  console.log(snapshot.docs())
-  const examples = snapshot.docs.map(doc => doc.data())
-  return { examples, pathname }
-}
+  console.log(`firebase: ${firebase}`);
+  const db = firebase.firestore();
+  console.log(`db: ${db}`);
+  const snapshot = await db.collection('examples').get();
+  const examples = snapshot.docs.map((doc) => doc.data());
 
-export default ExamplesIndex
+  return { examples, pathname };
+};
+
+export default ExamplesIndex;

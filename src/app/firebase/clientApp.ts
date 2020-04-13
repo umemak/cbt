@@ -1,8 +1,8 @@
-import firebase from 'firebase/app'
-import 'firebase/auth' // If you need it
-import 'firebase/firestore' // If you need it
-import 'firebase/storage' // If you need it
-import 'firebase/analytics' // If you need it
+import firebase from 'firebase/app';
+import 'firebase/auth'; // If you need it
+import 'firebase/firestore'; // If you need it
+import 'firebase/storage'; // If you need it
+import 'firebase/analytics'; // If you need it
 
 export const clientCredentials = {
   apiKey: process.env.FIREBASE_API_KEY,
@@ -13,20 +13,19 @@ export const clientCredentials = {
   messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.FIREBASE_APP_ID,
   measurementId: process.env.FIREBASE_MEASUREMENT_ID,
-}
-let db
-let auth
+};
+export let db: firebase.firestore.Firestore | null = null;
+export let auth;
 // Check that `window` is in scope for the analytics module!
 if (!firebase.apps.length) {
-  firebase.initializeApp(clientCredentials)
+  firebase.initializeApp(clientCredentials);
   // To enable analytics. https://firebase.google.com/docs/analytics/get-started
-  if (typeof window !== 'undefined') firebase.analytics()
-  auth = firebase.auth()
-  auth.signInAnonymously().catch((error) => {
+  if (typeof window !== 'undefined') firebase.analytics();
+  auth = firebase.auth();
+  auth.signInAnonymously().catch(() => {
     // Handle Errors here.
-    const errorCode = error.code;
+    // const errorCode = error.code;
     // var errorMessage = error.message;
-
     // if (errorCode === 'auth/operation-not-allowed') {
     //   alert('You must enable Anonymous auth in the Firebase Console.');
     // } else {
@@ -36,6 +35,4 @@ if (!firebase.apps.length) {
   db = firebase.firestore();
 }
 
-export default firebase
-
-module.exports = { auth, db }
+export default firebase;

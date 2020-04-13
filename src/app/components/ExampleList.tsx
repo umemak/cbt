@@ -1,19 +1,19 @@
-import * as React from 'react'
-import ExampleListItem from './ExampleListItem'
-import { Example } from '../interfaces'
+import * as React from 'react';
+import ExampleListItem from './ExampleListItem';
+import { Example } from '../interfaces';
 
 type Props = {
-  examples: Example[]
-}
+  examples: Example[];
+};
 
 const ExampleList: React.FunctionComponent<Props> = ({ examples }) => (
   <ul>
-    {examples.map(example => (
+    {examples.map((example) => (
       <li key={example.id}>
         <ExampleListItem data={example} />
       </li>
     ))}
   </ul>
-)
+);
 
-export default ExampleList
+export default ExampleList;
