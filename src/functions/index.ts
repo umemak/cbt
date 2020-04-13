@@ -1,11 +1,7 @@
-import * as functions from 'firebase-functions'
-import next from 'next'
+const admin = require("firebase-admin");
+const { auth, firestore, https, pubsub } = require("firebase-functions");
+admin.initializeApp();
 
-const dev = process.env.NODE_ENV !== 'production'
-const app = next({ dev, conf: { distDir: 'next' } })
-const handle = app.getRequestHandler()
-
-export const nextApp = functions.https.onRequest((req, res) => {
-  console.log('File: ' + req.originalUrl)
-  return app.prepare().then(() => handle(req, res))
-})
+// HTTPS Functions
+const h = require("./https");
+exports.next = https.onRequest(h.hosting.next);
