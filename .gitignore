@@ -5,6 +5,7 @@ node_modules
 # Firebase cache
 .firebase/
 .env
+firebase-adminsdk.json
 
 # debug
 npm-debug.log*

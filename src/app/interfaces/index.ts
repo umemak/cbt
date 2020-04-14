@@ -27,7 +27,6 @@ export type Question = {
 export type Choice = {
   cid: string;
   text: string;
-  correct: boolean;
 };
 
 export type Answer = {
