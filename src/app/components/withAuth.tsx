@@ -6,6 +6,7 @@ import { UserContext } from "../pages/_app";
 const withAuth = Component => {
   // const { user } = useContext(UserContext);
   return class extends React.Component {
+    state: { status: string };
     constructor(props) {
       super(props);
       this.state = {
@@ -14,7 +15,7 @@ const withAuth = Component => {
     }
     componentDidMount() {
       auth.onAuthStateChanged(() => {
-        if (true || user) {
+        if (true) {
           this.setState({
             status: "SIGNED_IN"
           });
@@ -25,9 +26,9 @@ const withAuth = Component => {
     }
     renderContent() {
       const { status } = this.state;
-      if (status == "LOADING") {
+      if (status === "LOADING") {
         return <h1>Loading ......</h1>;
-      } else if (status == "SIGNED_IN") {
+      } else if (status === "SIGNED_IN") {
         return <Component {...this.props} />;
       }
     }

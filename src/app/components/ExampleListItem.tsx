@@ -4,13 +4,13 @@ import Link from 'next/link';
 import { Example } from '../interfaces';
 
 type Props = {
-  data: Example;
+  example: Example;
 };
 
-const ListItem: React.FunctionComponent<Props> = ({ data }) => (
-  <Link href="/examples/[id]/start" as={`/examples/${data.eid}/start`}>
+const ListItem: React.FunctionComponent<Props> = ({ example }) => (
+  <Link href="/examples/[eid]/start" as={`/examples/${example.eid}/start`}>
     <a>
-      {data.eid}: {data.name}
+      {example.eid}: {example.name}
     </a>
   </Link>
 );

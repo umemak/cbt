@@ -10,7 +10,7 @@ const ExampleList: React.FunctionComponent<Props> = ({ examples }) => (
   <ul>
     {examples.map((example) => (
       <li key={example.eid}>
-        <ExampleListItem data={example} />
+        <ExampleListItem example={example} />
       </li>
     ))}
   </ul>

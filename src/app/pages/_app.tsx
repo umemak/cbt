@@ -7,6 +7,7 @@ require("firebase/storage");
 require("firebase/auth");
 
 import db from "../lib/db";
+import 'fomantic-ui-css/semantic.min.css'
 
 import { ThemeProvider } from "styled-components";
 // for now, a hard coded theme.
@@ -54,8 +55,8 @@ const user = null;
 
 export default class MyApp extends App {
   render() {
-    const { Component, pageProps, tenantObject, url } = this.props;
-    // const { Component, pageProps } = this.props;
+    // const { Component, pageProps, tenantObject, url } = this.props;
+    const { Component, pageProps } = this.props;
 
     return (
       <FirebaseContext.Provider

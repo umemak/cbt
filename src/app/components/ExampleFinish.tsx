@@ -13,31 +13,49 @@ const ExampleFinish: React.FunctionComponent<Props> = ({
   answers,
   example,
 }) => {
-  const { loadingUser, user } = useUser();
+  // const { loadingUser, user } = useUser();
   const [theanswers, setAnswers] = React.useState(answers);
 
-  React.useEffect(() => {
-    if (!loadingUser) {
-      const { uid } = user;
-      const answerRef = firebase
-        .firestore()
-        .collection('answers')
-        .doc(`${uid}:${example.eid}`);
-      answerRef
-        .get()
-        .then((doc) => {
-          if (doc.exists) {
-            setAnswers(doc.get('answers'));
-          } else {
-            // doc.data() will be undefined in this case
-            console.log('No such document!');
-          }
-        })
-        .catch((error) => {
-          console.log('Error getting document:', error);
-        });
-    }
-  }, [loadingUser, user, example]);
+  // React.useEffect(() => {
+  //   if (!loadingUser) {
+  //     const { uid } = user;
+  //     const answerRef = firebase
+  //       .firestore()
+  //       .collection('answers')
+  //       .doc(`${uid}:${example.eid}`);
+  //     answerRef
+  //       .get()
+  //       .then((doc) => {
+  //         if (doc.exists) {
+  //           setAnswers(doc.get('answers'));
+  //         } else {
+  //           // doc.data() will be undefined in this case
+  //           console.log('No such document!');
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log('Error getting document:', error);
+  //       });
+  //   }
+  // }, [loadingUser, user, example]);
+  const { uid } = firebase.auth().currentUser!;
+  const answerRef = firebase
+    .firestore()
+    .collection('answers')
+    .doc(`${uid}:${example.eid}`);
+  answerRef
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        setAnswers(doc.get('answers'));
+      } else {
+        // doc.data() will be undefined in this case
+        console.log('No such document!');
+      }
+    })
+    .catch((error) => {
+      console.log('Error getting document:', error);
+    });
 
   return (
     <Table celled>
@@ -64,8 +82,8 @@ const ExampleFinish: React.FunctionComponent<Props> = ({
                   {question && question.answer === answer.answer ? (
                     <Icon name="circle outline" color="green" />
                   ) : (
-                    <Icon name="x" color="red" />
-                  )}
+                      <Icon name="x" color="red" />
+                    )}
                 </Table.Cell>
                 <Table.Cell>{answer.answer}</Table.Cell>
                 <Table.Cell>{question && question.answer}</Table.Cell>

@@ -6,6 +6,7 @@ import util from 'util';
 
 // import { Example, Question, Choice } from '../interfaces';
 type Example = {
+  id: string;
   eid: string;
   name: string;
   questions: Question[];
@@ -56,6 +57,7 @@ const uploadSeed = async (collection: string, seedFile: string) => {
   // });
   const records = [
     {
+      id: 'sample',
       eid: 'sample',
       name: 'サンプルテスト',
       questions: [
@@ -114,6 +116,7 @@ const uploadSeed = async (collection: string, seedFile: string) => {
       ],
     },
     {
+      id: 'example2',
       eid: 'example2',
       name: 'サンプルテスト2',
       questions: [
@@ -183,8 +186,8 @@ const uploadSeed = async (collection: string, seedFile: string) => {
         })) || [];
 
       for await (const doc of docs) {
-        const { eid, ...docWithoutId } = doc;
-        await ref.doc(eid).set(docWithoutId);
+        const { id, ...docWithoutId } = doc;
+        await ref.doc(id).set(docWithoutId);
       }
 
       return;
