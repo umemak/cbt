@@ -7,23 +7,18 @@
   },
   "scripts": {
     "dev": "next \"src/app/\"",
-    "preserve": "npm run build-public && npm run build-funcs && npm run build-app && npm run copy-deps && npm run install-deps",
     "serve": "cross-env NODE_ENV=production firebase serve",
     "deploy": "NODE_ENV=production firebase deploy",
-    "clean": "rimraf \"dist/functions/**\" && rimraf \"dist/public\"",
-    "build-app": "next build \"src/app/\"",
-    "build-public": "cpx \"src/app/public/**/*.*\" \"dist/public\" -C",
-    "build-functions": "tsc --project src/functions",
-    "build-funcs": "babel \"src/functions\" --out-dir \"dist/functions\"",
+    "clean": "rimraf \"dist/**\"",
+    "build": "next build \"src/app/\"",
+    "export": "next export \"src/app/\" && yarn clean && yarn build-public",
+    "build-public": "cpx \"src/app/out/**/*.*\" \"dist/\" -C",
     "lint": "eslint 'src/**/*.{js,jsx,ts,tsx}'; stylelint 'src/**/*.{css,jsx,tsx}'",
     "lint-fix": "eslint --fix 'src/**/*.{js,jsx,ts,tsx}'; stylelint --fix 'src/**/*.{css,jsx,tsx}'",
     "lint-app": "eslint -c src/app/.eslintrc.js --ignore-path src/app/.eslintignore src/app",
     "typecheck-app": "tsc --project src/app",
-    "lint-functions": "eslint -c src/functions/.eslintrc.js src/functions",
-    "copy-deps": "cpx \"*{package.json,package-lock.json,yarn.lock}\" \"dist/functions\" -C",
-    "install-deps": "cd \"dist/functions\" && npm i",
     "precommit": "lint-staged",
-    "predeploy": "npm run build-public && npm run build-funcs && npm run build-app && npm run copy-deps"
+    "predeploy": "yarn build && yarn export"
   },
   "husky": {
     "hooks": {
