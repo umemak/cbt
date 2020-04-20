@@ -35,7 +35,3 @@ export type Answer = {
   fixed: boolean;
   flagged: boolean;
 };
-
-export type Progress = {
-  answers: Answer[];
-};

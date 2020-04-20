@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { NextPageContext } from 'next';
 
-import { Example, Progress } from '../../../interfaces';
+import { Example } from '../../../interfaces';
 import Layout from '../../../components/Layout';
 import ExampleStart from '../../../components/ExampleStart';
 import firebase from '../../../firebase/clientApp';
@@ -51,20 +51,12 @@ class ExamplesStartPage extends React.Component<Props> {
       );
     }
 
-    const answers = example.questions.map((q) => ({
-      qid: q.qid,
-      answer: '',
-      fixed: false,
-      flagged: false,
-    }));
-    const progress: Progress = { answers };
-
     return (
       <Layout
         title={`${example.name} | Next.js + TypeScript Example`}
         example={example}
       >
-        <ExampleStart example={example} progress={progress} />
+        <ExampleStart example={example} />
       </Layout>
     );
   }

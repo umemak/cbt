@@ -4,6 +4,7 @@ import firebase from '../../firebase/clientApp';
 
 import Layout from '../../components/Layout';
 import ExampleList from '../../components/ExampleList';
+import UserName from '../../components/UserName';
 import { Example } from '../../interfaces';
 
 type Props = {
@@ -49,11 +50,9 @@ class ExamplesIndexPage extends React.Component<Props> {
     }
 
     return (
-      <Layout title="Users List | Next.js + TypeScript Example">
+      <Layout title="Examples List | Next.js + TypeScript Example">
         <h1>Examples List</h1>
-        <p>
-          Example fetching data from inside <code>getInitialProps()</code>.
-        </p>
+        <UserName />
         <ExampleList examples={examples} />
         <p>
           <Link href="/">

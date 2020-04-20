@@ -18,7 +18,8 @@
     "lint-app": "eslint -c src/app/.eslintrc.js --ignore-path src/app/.eslintignore src/app",
     "typecheck-app": "tsc --project src/app",
     "precommit": "lint-staged",
-    "predeploy": "yarn build && yarn export"
+    "predeploy": "yarn build && yarn export",
+    "fblogin": "firebase login --no-localhost"
   },
   "husky": {
     "hooks": {

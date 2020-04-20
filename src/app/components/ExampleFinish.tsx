@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Table, Icon } from 'semantic-ui-react';
+import ReactMarkdown from 'react-markdown';
 import { Example, Answer } from '../interfaces';
 import { useUser } from '../context/userContext';
 import firebase from '../firebase/clientApp';
@@ -13,32 +14,10 @@ const ExampleFinish: React.FunctionComponent<Props> = ({
   answers,
   example,
 }) => {
-  // const { loadingUser, user } = useUser();
   const [theanswers, setAnswers] = React.useState(answers);
+  // const [collectCount, setCollectCount] = React.useState(0);
 
-  // React.useEffect(() => {
-  //   if (!loadingUser) {
-  //     const { uid } = user;
-  //     const answerRef = firebase
-  //       .firestore()
-  //       .collection('answers')
-  //       .doc(`${uid}:${example.eid}`);
-  //     answerRef
-  //       .get()
-  //       .then((doc) => {
-  //         if (doc.exists) {
-  //           setAnswers(doc.get('answers'));
-  //         } else {
-  //           // doc.data() will be undefined in this case
-  //           console.log('No such document!');
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log('Error getting document:', error);
-  //       });
-  //   }
-  // }, [loadingUser, user, example]);
-  const { uid } = firebase.auth().currentUser!;
+  const { uid } = firebase.auth().currentUser;
   const answerRef = firebase
     .firestore()
     .collection('answers')
@@ -49,13 +28,21 @@ const ExampleFinish: React.FunctionComponent<Props> = ({
       if (doc.exists) {
         setAnswers(doc.get('answers'));
       } else {
-        // doc.data() will be undefined in this case
         console.log('No such document!');
       }
     })
     .catch((error) => {
       console.log('Error getting document:', error);
     });
+  const questionCount = theanswers.length;
+  const collectCount = theanswers.filter((answer) => {
+    const question = example.questions.find((q) => q.qid === answer.qid);
+    if (question && question.answer === answer.answer) {
+      return true;
+    }
+
+    return null;
+  }).length;
 
   return (
     <Table celled>
@@ -82,19 +69,24 @@ const ExampleFinish: React.FunctionComponent<Props> = ({
                   {question && question.answer === answer.answer ? (
                     <Icon name="circle outline" color="green" />
                   ) : (
-                      <Icon name="x" color="red" />
-                    )}
+                    <Icon name="x" color="red" />
+                  )}
                 </Table.Cell>
                 <Table.Cell>{answer.answer}</Table.Cell>
                 <Table.Cell>{question && question.answer}</Table.Cell>
-                <Table.Cell>{question && question.explanation}</Table.Cell>
+                <Table.Cell>
+                  {question && <ReactMarkdown source={question.explanation} />}
+                </Table.Cell>
               </Table.Row>
             );
           })}
       </Table.Body>
       <Table.Footer>
         <Table.Row>
-          <Table.Cell colSpan="5">正答数：999/999 正答率：100％</Table.Cell>
+          <Table.Cell colSpan="5">
+            正答数：{collectCount}/{questionCount} 正答率：
+            {(collectCount / questionCount) * 100}％
+          </Table.Cell>
         </Table.Row>
       </Table.Footer>
     </Table>

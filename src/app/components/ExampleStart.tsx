@@ -5,16 +5,21 @@ import Router from 'next/router';
 
 import firebase from '../firebase/clientApp';
 
-import { Example, Progress } from '../interfaces';
+import { Example } from '../interfaces';
 import Timer from './Timer';
 
 type Props = {
   example: Example;
-  progress: Progress;
 };
 
-const ExampleStart: React.FC<Props> = ({ example, progress }) => {
-  const [answers, setAnswers] = React.useState(progress.answers);
+const ExampleStart: React.FC<Props> = ({ example }) => {
+  const progress = example.questions.map((q) => ({
+    qid: q.qid,
+    answer: '',
+    fixed: false,
+    flagged: false,
+  }));
+  const [answers, setAnswers] = React.useState(progress);
   const isSelected = (qid: string, cid: string) => {
     const answer = answers.find((a) => a.qid === qid);
     if (!answer) {
@@ -23,17 +28,15 @@ const ExampleStart: React.FC<Props> = ({ example, progress }) => {
 
     return answer.answer === cid;
   };
-  const updateAnswers = (e) => {
+  const updateAnswers = (e, { name, value }) => {
     setAnswers((prev) =>
-      prev.map((ans) =>
-        ans.qid === e.target.name ? { ...ans, answer: e.target.value } : ans,
-      ),
+      prev.map((ans) => (ans.qid === name ? { ...ans, answer: value } : ans)),
     );
   };
-  const updateFlag = (e) => {
+  const updateFlag = (e, { value }) => {
     setAnswers((prev) =>
       prev.map((ans) =>
-        ans.qid === e.target.value ? { ...ans, flagged: !ans.flagged } : ans,
+        ans.qid === value ? { ...ans, flagged: !ans.flagged } : ans,
       ),
     );
   };
@@ -87,7 +90,7 @@ const ExampleStart: React.FC<Props> = ({ example, progress }) => {
       return false;
     }
 
-    const { uid } = firebase.auth().currentUser!;
+    const { uid } = firebase.auth().currentUser;
     const answerRef = firebase
       .firestore()
       .collection('answers')
